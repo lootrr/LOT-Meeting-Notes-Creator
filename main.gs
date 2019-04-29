@@ -7,8 +7,8 @@ function docMain() {
   // timestamp of today's date.
   var MILLIS_PER_DAY = 1000 * 60 * 60 * 24;
   var nowDate = new Date();
-  var date = new Date(nowDate.getTime() + MILLIS_PER_DAY); // today + 1;
-  var currDate = Utilities.formatDate(date, "PST", "MM/dd/yyyy");
+  var date = new Date(nowDate.getTime() + 7 * MILLIS_PER_DAY); // today + 7;
+  var currDate = Utilities.formatDate(date, "PST", "MM/dd/yy");
   
   // finds the correct folder for the new date to be inserted into
   var destFolder = getFolder("LOT Spring Meeting Notes");
@@ -53,6 +53,8 @@ function docInfo(doc, folder, currDate){
   var drive = doc.getBody().insertParagraph(1, "Drive");
   drive.setAttributes(style);
   drive.setLinkUrl(LOTFolder.getUrl());
+  
+  // merge first star
   var star1 = doc.getBody().insertParagraph(2, " * ");
   star1.setAttributes(style);
   star1.merge();
@@ -63,20 +65,22 @@ function docInfo(doc, folder, currDate){
   spr.setLinkUrl(SprFolder.getUrl());
   spr.setAttributes(style);
   spr.merge();
+  
+  // merge star 2
   var star2 = doc.getBody().insertParagraph(2, " * ");
   star2.setAttributes(style);
   star2.merge();
   
   // create the previous notes hyperlink
-  var MILLIS_PER_DAY = 1000 * 60 * 60 * 24;
-  var nowDate = new Date();
-  var prevDate = new Date(nowDate.getTime() - 6 * MILLIS_PER_DAY); // change number for days (today - 6)
+  var prevDate = new Date();
   var finalDate = Utilities.formatDate(prevDate, "PST", "MM/dd/yy");
   var prevDocFile = getFile("LOT " + finalDate);
   var prev = doc.getBody().insertParagraph(2, "Previous Meeting");
   prev.setLinkUrl(prevDocFile.getUrl());
   prev.setAttributes(style);
   prev.merge();
+  
+  // merge star 3
   var star3 = doc.getBody().insertParagraph(2, " * ");
   star3.setAttributes(style);
   star3.merge();
