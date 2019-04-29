@@ -1,2 +1,2 @@
-# TG-Meeting-Notes-Creator
-Triton Gaming script that creates a formatted meeting notes in a specific folder.
+# LOT-Meeting-Notes-Creator
+League of Triton google script that creates a formatted meeting notes in a specific folder.
