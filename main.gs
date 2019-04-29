@@ -5,7 +5,10 @@
 function docMain() {
   
   // timestamp of today's date.
-  var currDate = Utilities.formatDate(new Date(), "PST", "MM/dd/yyyy");
+  var MILLIS_PER_DAY = 1000 * 60 * 60 * 24;
+  var nowDate = new Date();
+  var date = new Date(nowDate.getTime() + MILLIS_PER_DAY); // today + 1;
+  var currDate = Utilities.formatDate(date, "PST", "MM/dd/yyyy");
   
   // finds the correct folder for the new date to be inserted into
   var destFolder = getFolder("LOT Spring Meeting Notes");
@@ -31,19 +34,19 @@ function docMain() {
  */
 function docInfo(doc, folder, currDate){
   
-  // current style of the header.  
+  // current style of the document header.
   var style = {};
   style[DocumentApp.Attribute.HORIZONTAL_ALIGNMENT] = DocumentApp.HorizontalAlignment.CENTER;
   style[DocumentApp.Attribute.FONT_FAMILY] = 'Corbel';
   style[DocumentApp.Attribute.FONT_SIZE] = 11;
   style[DocumentApp.Attribute.BOLD] = true;
   
-  // Creates the center text "Meeting Notes MM/DD/YYYY"
+  // creates the center text "Meeting Notes MM/DD/YYYY"
   
   var header = doc.getBody().insertParagraph(0, " ❆ Meeting Notes " + currDate + " ❆");
   header.setAttributes(style);
   
-  // Creates the menu bar right under the meeting notes blurb
+  // creates the menu bar right under the meeting notes blurb
   
   // creates the drive folder hyperLink
   var LOTFolder = getFolder("League of Tritons");
@@ -64,10 +67,10 @@ function docInfo(doc, folder, currDate){
   star2.setAttributes(style);
   star2.merge();
   
-  //  create the previous notes hyperlink
+  // create the previous notes hyperlink
   var MILLIS_PER_DAY = 1000 * 60 * 60 * 24;
   var nowDate = new Date();
-  var prevDate = new Date(nowDate.getTime() - 7 * MILLIS_PER_DAY);
+  var prevDate = new Date(nowDate.getTime() - 6 * MILLIS_PER_DAY); // change number for days (today - 6)
   var finalDate = Utilities.formatDate(prevDate, "PST", "MM/dd/yy");
   var prevDocFile = getFile("LOT " + finalDate);
   var prev = doc.getBody().insertParagraph(2, "Previous Meeting");
@@ -78,11 +81,10 @@ function docInfo(doc, folder, currDate){
   star3.setAttributes(style);
   star3.merge();
   
-  //  create the next notes hyperlink
+  // create the next notes hyperlink
   var next = doc.getBody().insertParagraph(2, "Next Meeting");
   next.setAttributes(style);
   next.merge();
- 
   
 }
 
@@ -91,17 +93,9 @@ function docInfo(doc, folder, currDate){
  * @param folderName folder name that is to be searched
  */
 function getFolder(folderName){      
+  var folders = DriveApp.getFoldersByName(folderName);     
+  return folders.next();
   
-  var folders = DriveApp.getFolders();     
-  
-  // iterates the drive to find the folder
-  while (folders.hasNext()) {
-    var folder = folders.next();
-    if(folderName == folder.getName()) {         
-      return folder;
-    }
-  }
-  return null;
 }
 
 /*
@@ -109,15 +103,7 @@ function getFolder(folderName){
  * @param filename file name that is to be searched
  */
 function getFile(fileName){
+  var files = DriveApp.getFilesByName(fileName);        
+  return files.next();
   
-  var files = DriveApp.getFilesByName(fileName);
-  
-  while (files.hasNext()) {
-    var file = files.next();
-    if(fileName == file.getName()) {         
-      return file;
-    }
-  }
-  return null;
 }
-
