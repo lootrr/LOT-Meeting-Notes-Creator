@@ -4,7 +4,7 @@
  */
 function docMain() {
   
-  // timestamp of today's date.
+  // timestamp of next week's date.
   var MILLIS_PER_DAY = 1000 * 60 * 60 * 24;
   var nowDate = new Date();
   var date = new Date(nowDate.getTime() + 7 * MILLIS_PER_DAY); // today + 7;
@@ -30,6 +30,7 @@ function docMain() {
 /*
  * function that is used to edit the contents of the new document
  * @param doc      new document that is created
+ * @param folder   folder where the source doc is located
  * @param currDate current date of creation
  */
 function docInfo(doc, folder, currDate){
@@ -43,7 +44,7 @@ function docInfo(doc, folder, currDate){
   
   // creates the center text "Meeting Notes MM/DD/YYYY"
   
-  var header = doc.getBody().insertParagraph(0, " ❆ Meeting Notes " + currDate + " ❆");
+  var header = doc.getBody().insertParagraph(0, " 🌻 Meeting Notes " + currDate + " 🌻");
   header.setAttributes(style);
   
   // creates the menu bar right under the meeting notes blurb
@@ -92,7 +93,7 @@ function docInfo(doc, folder, currDate){
   
 }
 
-/*
+/**
  * helper function used to find the insertion folder location.
  * @param folderName folder name that is to be searched
  */
@@ -102,7 +103,7 @@ function getFolder(folderName){
   
 }
 
-/*
+/**
  * helper function used to find the previous file location.
  * @param filename file name that is to be searched
  */
